@@ -1,7 +1,12 @@
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'date'
-require_relative 'lib/sensu-plugins-datadog'
+
+if RUBY_VERSION < '2.0.0'
+  require 'lib/sensu-plugins-datadog'
+else
+  require_relative 'lib/sensu-plugins-datadog'
+end
 
 pvt_key = '~/.ssh/gem-private_key.pem'
 
@@ -27,7 +32,6 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency 'rubocop',       '0.23.0'
   s.add_development_dependency 'rspec'          '3.1.0'
-  s.add_development_dependency 'rspec-mocks'    '3.1.3'
   s.add_development_dependency 'bundler',       '~> 1.7'
   s.add_development_dependency 'rake',          '~> 10.0'
 end

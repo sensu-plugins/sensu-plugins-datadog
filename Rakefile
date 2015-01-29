@@ -1,3 +1,6 @@
+require "bundler/gem_tasks"
+require 'rspec/core/rake_task'
+require 'rubocop/rake_task'
 
 desc 'Generate documentation'
 task :rdoc do

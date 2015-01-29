@@ -30,7 +30,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'datadog',           '0.1.0.alpha'
   s.add_runtime_dependency 'sensu-plugin',      '1.1.0'
 
-  s.add_development_dependency 'rubocop',       '~> 0.23'
+  s.add_development_dependency 'rubocop',       '~> 0.17.0'
   s.add_development_dependency 'rspec',         '~> 3.1'
   s.add_development_dependency 'bundler',       '~> 1.7'
   s.add_development_dependency 'rake',          '~> 10.0'

@@ -19,6 +19,15 @@
 
 ## Installation
 
+Add the public key (if you haven’t already) as a trusted certificate
+
+```
+gem cert --add <(curl -Ls https://raw.githubusercontent.com/sensu-plugins/sensu-plugins.github.io/master/certs/sensu-plugins.pem)
+gem install <gem> -P MediumSecurity
+```
+
+You can also download the key from /certs/ within each repository.
+
 `gem install sensu-plugins-datadog`
 
 Add *sensu-plugins-datadog* to your Gemfile, manifest, cookbook, etc

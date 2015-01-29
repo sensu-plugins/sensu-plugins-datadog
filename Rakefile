@@ -7,7 +7,7 @@ require 'yard'
 require 'yard/rake/yardoc_task'
 
 desc 'Generate documentation' do
-  YARD::Rake::YardocTask.new do |t|
+  YARD::Rake::YardocTask.new(:yard) do |t|
     OTHER_PATHS = %w()
     t.files = ['lib/**/*.rb', 'bin/**/*.rb', OTHER_PATHS]
     t.options = %w(--markup-provider=redcarpet --markup=markdown --main=README.md --files CHANGELOG.md,CONTRIBUTING.md)

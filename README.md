@@ -13,7 +13,8 @@
 }
 ```
 ## Files
- * bin/datadog-metrics
+ * bin/datadog-metrics.rb
+ * bin/datadog-notification.rb
 
 ## Installation
 

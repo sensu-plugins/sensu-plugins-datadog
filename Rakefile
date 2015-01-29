@@ -17,7 +17,7 @@ begin
   end
 end
 
-RuboCop::RakeTask.new
+Rubocop::RakeTask.new
 
 RSpec::Core::RakeTask.new(:spec) do |r|
   r.pattern = FileList['**/**/*_spec.rb']

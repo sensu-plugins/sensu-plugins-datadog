@@ -28,7 +28,7 @@ require 'sensu-handler'
 require 'dogapi'
 
 #
-# == Datadog Metrics
+# Datadog Metrics
 #
 class DatadogMetrics < Sensu::Handler
   # Override filters from Sensu::Handler.
@@ -50,11 +50,9 @@ class DatadogMetrics < Sensu::Handler
 
   # Push metric point
   #
-  # === Attributes
-  #
-  # * +name+
-  # * +value+
-  # * +_timestamp+
+  # @param name       [String]
+  # @param value      [String]
+  # @param _timestamp [String]
   def emit_metric(name, value, _timestamp)
     timeout(3) do
       @dog.emit_point(name, value, host: @event['client']['name'])

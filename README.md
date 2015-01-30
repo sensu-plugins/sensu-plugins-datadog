@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/sensu-plugins/sensu-plugins-datadog.svg?branch=master)](https://travis-ci.org/sensu-plugins/sensu-plugins-datadog)
 [![Gem Version](https://badge.fury.io/rb/sensu-plugins-datadog.svg)](http://badge.fury.io/rb/sensu-plugins-datadog)
-
+[![Code Climate](https://codeclimate.com/github/sensu-plugins/sensu-plugins-datadog/badges/gpa.svg)](https://codeclimate.com/github/sensu-plugins/sensu-plugins-datadog)
 ## Functionality
 ```json
 {

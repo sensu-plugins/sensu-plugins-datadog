@@ -16,8 +16,12 @@
 }
 ```
 ## Files
- * bin/datadog-metrics.rb
- * bin/datadog-notification.rb
+
+#### bin/datadog-metrics.rb
+Send metrics to datadog
+ 
+#### bin/datadog-notification.rb
+Send event data to datadog
 
 ## Installation
 

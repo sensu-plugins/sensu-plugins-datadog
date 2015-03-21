@@ -1,6 +1,7 @@
 ## Sensu-Plugins-Datadog
 
-[ ![Codeship Status for sensu-plugins/sensu-plugins-datadog](https://codeship.com/projects/5e9844c0-b191-0132-e195-32bd639983ea/status?branch=master)](https://codeship.com/projects/69880)[![Gem Version](https://badge.fury.io/rb/sensu-plugins-datadog.svg)](http://badge.fury.io/rb/sensu-plugins-datadog)
+[![Build Status](https://travis-ci.org/sensu-plugins/sensu-plugins-datadog.svg?branch=master)](https://travis-ci.org/sensu-plugins/sensu-plugins-datadog)
+[![Gem Version](https://badge.fury.io/rb/sensu-plugins-datadog.svg)](http://badge.fury.io/rb/sensu-plugins-datadog)
 [![Code Climate](https://codeclimate.com/github/sensu-plugins/sensu-plugins-datadog/badges/gpa.svg)](https://codeclimate.com/github/sensu-plugins/sensu-plugins-datadog)
 [![Test Coverage](https://codeclimate.com/github/sensu-plugins/sensu-plugins-datadog/badges/coverage.svg)](https://codeclimate.com/github/sensu-plugins/sensu-plugins-datadog)
 [![Dependency Status](https://gemnasium.com/sensu-plugins/sensu-plugins-datadog.svg)](https://gemnasium.com/sensu-plugins/sensu-plugins-datadog)

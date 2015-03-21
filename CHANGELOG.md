@@ -18,3 +18,7 @@
 
 * Update CONTRIBUTING
 * Update README
+
+#### 0.0.2
+
+* Remove TravisCI and add CodeShip

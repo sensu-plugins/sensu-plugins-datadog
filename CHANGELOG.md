@@ -18,3 +18,9 @@
 
 * Update CONTRIBUTING
 * Update README
+
+#### 0.0.2
+
+* pin all runtime and development dependencies
+* add Chef provisioning to Vagrantfile
+* add metadata to gem 

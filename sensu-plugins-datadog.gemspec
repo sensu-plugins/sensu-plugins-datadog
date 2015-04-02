@@ -24,7 +24,7 @@ Gem::Specification.new do |s|
                                'development_status' => 'unmaintained',
                                'production_status'  => 'unstable - testing reccomended'
                                }
-  s.name                   = 'sensu-plugins-sensu-plugins-datadog'
+  s.name                   = 'sensu-plugins-datadog'
   s.platform               = Gem::Platform::RUBY
   s.require_paths          = ['lib']
   s.required_ruby_version  = '>= 1.9.3'

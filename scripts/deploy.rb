@@ -52,7 +52,6 @@ def create_commit(plugin)
           email: ENV['CI_COMMITTER_EMAIL'],
           date: Date.today.to_s
         }
-  end
 end
 deploy_rubygems if ENV['CI_MESSAGE'] == 'deploy bump'
 create_github_release(spec, plugin) if ENV['CI_MESSAGE'] == 'deploy bump'

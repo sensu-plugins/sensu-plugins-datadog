@@ -1,7 +1,14 @@
+require 'sensu-plugins-datadog/version'
+
+# Load the defaults
+
 #
-# Set gem version
+# Default class
 #
 module SensuPluginsDatadog
-  # Gem version
-  VERSION = '0.0.2'
+  class << self
+  end
+
+  class << self
+  end
 end

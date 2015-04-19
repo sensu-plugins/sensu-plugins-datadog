@@ -31,7 +31,7 @@ Gem::Specification.new do |s|
   # s.signing_key            = File.expand_path(pvt_key) if $PROGRAM_NAME =~ /gem\z/
   s.summary                = ''
   s.test_files             = s.files.grep(%r{^(test|spec|features)/})
-  s.version                = SensuPluginsDatadog::::Version::VER_STRING
+  s.version                = SensuPluginsDatadog::Version::VER_STRING
 
   s.add_runtime_dependency 'datadog',           '0.1.0.alpha'
   s.add_runtime_dependency 'sensu-plugin',      '1.1.0'

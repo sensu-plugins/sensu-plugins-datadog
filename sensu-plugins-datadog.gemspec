@@ -8,7 +8,7 @@ else
   require_relative 'lib/sensu-plugins-datadog'
 end
 
-pvt_key = '~/.ssh/gem-private_key.pem'
+# pvt_key = '~/.ssh/gem-private_key.pem'
 
 Gem::Specification.new do |s|
   s.authors                = ['Yieldbot, Inc. and contributors']

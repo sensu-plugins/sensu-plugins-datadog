@@ -3,7 +3,7 @@
 plugin = File.basename(File.expand_path('.'))
 spec = Gem::Specification.load("#{ plugin }.gemspec")
 lib = File.expand_path('../lib')
-version_file = "lib/#{ plugin }/version.rb"
+# version_file = "lib/#{ plugin }/version.rb"
 
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require_relative "../../#{ plugin }/lib/#{ plugin }"
@@ -20,7 +20,7 @@ def deploy_rubygems
         https://rubygems.org/api/v1/gems`
 end
 
-def create_github_release(spec, plugin)
+def create_github_release(spec, plugin) # rubocop:disable all
   @github = Github.new do |c|
     c.oauth_token = ENV['GITHUB_TOKEN']
   end
@@ -46,14 +46,14 @@ def create_commit(plugin)
     c.oauth_token = ENV['GITHUB_TOKEN']
   end
   @github.git_data.commits.create 'sensu-plugins', plugin,
-        message: "bump version",
-        author: {
-          name: ENV['CI_COMMITTER_USERNAME'],
-          email: ENV['CI_COMMITTER_EMAIL'],
-          date: Date.today.to_s
-        }
+                                  message: 'bump version',
+                                  author: {
+                                    name: ENV['CI_COMMITTER_USERNAME'],
+                                    email: ENV['CI_COMMITTER_EMAIL'],
+                                    date: Date.today.to_s
+                                  }
 end
 deploy_rubygems if ENV['CI_MESSAGE'] == 'deploy bump'
 create_github_release(spec, plugin) if ENV['CI_MESSAGE'] == 'deploy bump'
-# version_bump(version)
+# version_bump(version_file)
 # create_commit(plugin)

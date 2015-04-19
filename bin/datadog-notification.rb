@@ -69,7 +69,7 @@ class DatadogNotif < Sensu::Handler
   end
 
   # submit the event to datadog
-  def datadog
+  def datadog # rubocop:disable all
     description = @event['notification'] || [@event['client']['name'], @event['check']['name'], @event['check']['output']].join(' ')
     action = acquire_action
     priority = acquire_priority

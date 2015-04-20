@@ -23,9 +23,7 @@ end
 # Create Github tag and release
 #
 def create_github_release(spec, plugin)
-  `curl -i -H "Authorization: token #{ ENV['GITHUB_TOKEN'] }" -d '{ "tag_name": "#{ spec.version }", "target_commitish": "#{ ENV['CI_COMMIT_ID'] }", "name": "#{ spec.version }",
-  "body": "#{ ENV['CI_MESSAGE'] }", "draft": "#{ spec.metadata['release_draft']}", "prerelease": "#{ spec.metadata['release_prerelease']}" }' https://api.github.com/repos/sensu-plugin
-  s/#{ plugin }/releases`
+  `curl -i -H "Authorization: token #{ ENV['GITHUB_TOKEN'] }" -d '{ "tag_name": "#{ spec.version }", "target_commitish": "#{ ENV['CI_COMMIT_ID'] }", "name": "#{ spec.version }", "body": "#{ ENV['CI_MESSAGE'] }", "draft": "#{ spec.metadata['release_draft']}", "prerelease": "#{ spec.metadata['release_prerelease']}" }' https://api.github.com/repos/sensu-plugins/#{ plugin }/releases` # rubocop:disable all
 end
 
 #
@@ -42,7 +40,7 @@ end
 #
 # Commit the ner version back in Github (not functioning)
 #
-def create_commit(plugin)
+def create_commit(_plugin)
   `git config --global user.email "#{ ENV['CI_COMMITTER_EMAIL'] }"`
   `git config --global user.name "#{ ENV['CI_COMMITTER_USERNAME'] }"`
   `git add --all`

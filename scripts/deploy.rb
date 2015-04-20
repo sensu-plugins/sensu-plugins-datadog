@@ -4,11 +4,9 @@ plugin = File.basename(File.expand_path('.'))
 spec = Gem::Specification.load("#{ plugin }.gemspec")
 lib = File.expand_path('../lib')
 # version_file = "lib/#{ plugin }/version.rb"
-`gem install github_api`
 
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require_relative "../../#{ plugin }/lib/#{ plugin }"
-require 'github_api'
 require 'date'
 
 #
@@ -21,19 +19,18 @@ def deploy_rubygems
         https://rubygems.org/api/v1/gems`
 end
 
-def create_github_release(spec, plugin) # rubocop:disable all
-  @github = Github.new do |c|
-    c.oauth_token = ENV['GITHUB_TOKEN']
-  end
-  @github.repos.releases.create 'sensu-plugins', plugin, spec.version,
-                                tag_name: spec.version,
-                                target_commitish: ENV['CI_COMMIT_ID'],
-                                name: spec.version,
-                                body: ENV['description'],
-                                draft: spec.metadata['release_draft'],
-                                prerelease: spec.metadata['release_prerelease']
+#
+# Create Github tag and release
+#
+def create_github_release(spec, plugin)
+  `curl -i -H "Authorization: token #{ ENV['GITHUB_TOKEN'] }" -d '{ "tag_name": "#{ spec.version }", "target_commitish": "#{ ENV['CI_COMMIT_ID'] }", "name": "#{ spec.version }",
+  "body": "#{ ENV['CI_MESSAGE'] }", "draft": "#{ spec.metadata['release_draft']}", "prerelease": "#{ spec.metadata['release_prerelease']}" }' https://api.github.com/repos/sensu-plugin
+  s/#{ plugin }/releases`
 end
 
+#
+# Bump the patch version of the plugin
+#
 def version_bump(version_file)
   # Read the file, bump the PATCH version
   contents = File.read(version_file).gsub(/(PATCH = )(\d+)/) { |_| Regexp.last_match[1] + (Regexp.last_match[2].to_i + 1).to_s }
@@ -42,19 +39,24 @@ def version_bump(version_file)
   File.open(version_file, 'w') { |file| file.puts contents }
 end
 
+#
+# Commit the ner version back in Github (not functioning)
+#
 def create_commit(plugin)
-  @github = Github.new do |c|
-    c.oauth_token = ENV['GITHUB_TOKEN']
-  end
-  @github.git_data.commits.create 'sensu-plugins', plugin,
-                                  message: 'bump version',
-                                  author: {
-                                    name: ENV['CI_COMMITTER_USERNAME'],
-                                    email: ENV['CI_COMMITTER_EMAIL'],
-                                    date: Date.today.to_s
-                                  }
+  `git config --global user.email "#{ ENV['CI_COMMITTER_EMAIL'] }"`
+  `git config --global user.name "#{ ENV['CI_COMMITTER_USERNAME'] }"`
+  `git add --all`
+  `git commit -m 'version bump'`
+  `git push origin master`
 end
-deploy_rubygems if ENV['CI_MESSAGE'] == 'deploy bump'
-create_github_release(spec, plugin) if ENV['CI_MESSAGE'] == 'deploy bump'
-# version_bump(version_file)
-# create_commit(plugin)
+
+#
+# If the commit message == 'deply bump' the doing the following
+# If the commit message is anything else we just run tests
+#
+if ENV['CI_MESSAGE'] == 'deploy bump'
+  # version_bump(version_file)
+  # create_commit(plugin)
+  deploy_rubygems
+  create_github_release(spec, plugin)
+end

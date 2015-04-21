@@ -3,7 +3,7 @@
 plugin = File.basename(File.expand_path('.'))
 spec = Gem::Specification.load("#{ plugin }.gemspec")
 lib = File.expand_path('../lib')
-version_file = "lib/#{ plugin }/version.rb"
+# version_file = "lib/#{ plugin }/version.rb"
 
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require_relative "../../#{ plugin }/lib/#{ plugin }"
@@ -39,52 +39,9 @@ def version_bump(version_file)
   File.open(version_file, 'w') { |file| file.puts contents }
 end
 
-def acquire_latest_commit
-  head = JSON.parse(`curl -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/repos/sensu-plugins/sensu-plugins-datadog/git/refs/heads/master`)
-
-  # head_sha = head['object']['sha']
-  # head_url = head['object']['url']
-
-  head_commit = JSON.parse(`curl -H "Authorization: token $GITHUB_TOKEN" #{ head['object']['url'] }`)
-
-  # head_commit_sha = head_commit['sha']
-  # head_tree_sha   = head_commit['tree']['sha']
-  # head_tree_url   = head_commit['tree']['url']
-
-  [head_commit['tree']['url'], head_commit['tree']['sha'], head['object']['sha'], head_commit['sha']]
-end
-
 def encode_file
   file = 'lib/sensu-plugins-datadog/version.rb'
   Base64.strict_encode64(open(file) { |io| io.read })
-end
-
-def send_file_to_github
-  file_data = JSON.parse(`curl -H "Authorization: token $GITHUB_TOKEN" -d '{"content": "#{ encode_file }", "encoding": "base64"}' https://api.github.com/repos/sensu-plugins/sensu-plugins-datadog/git/blobs`)# rubocop:disable all
-  file_data['sha']
-end
-
-def commit_tree(head_tree_url, head_tree_sha, file_data_sha)
-  data = JSON.parse(`curl -H "Authorization: token $GITHUB_TOKEN" #{ head_tree_url }`)
-
-  `curl -H "Authorization: token $GITHUB_TOKEN" -d '{ "base_tree": "#{ head_tree_sha }", "tree": [ { "path": "lib/sensu-plugins-datadog/version.rb", "mode": "100644", "type": "blob", "sha": "#{ file_data_sha }" } ]}' https://api.github.com/repos/sensu-plugins/sensu-plugins-datadog/git/trees`# rubocop:disable all
-  data['sha']
-end
-
-def create_commit(head_commit_sha, commit_tree_sha)
-  commit_data = JSON.parse(`curl -H "Authorization: token $GITHUB_TOKEN" -d '{"message": "version bump", "parents": ["#{ head_commit_sha }"], "tree": "#{ commit_tree_sha }"}' https://api.github.com/repos/sensu-plugins/sensu-plugins-datadog/git/commits`)# rubocop:disable all
-
-  `curl -H "Authorization: token $GITHUB_TOKEN" -d '{ "sha": "#{ commit_data['sha'] }", "force": true}' https://api.github.com/repos/sensu-plugins/sensu-plugins-datadog/git/refs/heads/master`# rubocop:disable all
-end
-
-#
-# Commit the ner version back in Github (not functioning)
-#
-def create_github_commit(_plugin)
-  head_tree_url, head_tree_sha, _head_sha, head_commit_sha = acquire_latest_commit
-  file_sha = send_file_to_github
-  commit_tree_sha = commit_tree(head_tree_url, head_tree_sha, file_sha)
-  create_commit(head_commit_sha, commit_tree_sha)
 end
 
 #
@@ -92,8 +49,7 @@ end
 # If the commit message is anything else we just run tests
 #
 if ENV['CI_MESSAGE'] == 'deploy bump'
-  version_bump(version_file)
-  create_github_commit(plugin)
+  # version_bump(version_file)
   deploy_rubygems
   create_github_release(spec, plugin)
 end

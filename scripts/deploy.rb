@@ -25,7 +25,7 @@ end
 # Create Github tag and release
 #
 def create_github_release(spec, plugin)
-  `curl -i -H "Authorization: token #{ ENV['GITHUB_TOKEN'] }" -d '{ "tag_name": "#{ spec.version }", "target_commitish": "#{ ENV['CI_COMMIT_ID'] }", "name": "#{ spec.version }", "body": "#{ ENV['CI_MESSAGE'] }", "draft": "#{ spec.metadata['release_draft']}", "prerelease": "#{ spec.metadata['release_prerelease']}" }' https://api.github.com/repos/sensu-plugins/#{ plugin }/releases` # rubocop:disable all
+  `curl -H "Authorization: token #{ ENV['GITHUB_TOKEN'] }" -d '{ "tag_name": "#{ spec.version }", "target_commitish": "#{ ENV['CI_COMMIT_ID'] }", "name": "#{ spec.version }", "body": "#{ ENV['CI_MESSAGE'] }", "draft": "#{ spec.metadata['release_draft']}", "prerelease": "#{ spec.metadata['release_prerelease']}" }' https://api.github.com/repos/sensu-plugins/#{ plugin }/releases` # rubocop:disable all
 end
 
 #
@@ -40,12 +40,12 @@ def version_bump(version_file)
 end
 
 def acquire_latest_commit
-  head = JSON.parse(`curl -H "Authorization: token $GIT_TOKEN" https://api.github.com/repos/sensu-plugins/sensu-plugins-datadog/git/refs/heads/master`)
+  head = JSON.parse(`curl -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/repos/sensu-plugins/sensu-plugins-datadog/git/refs/heads/master`)
 
   # head_sha = head['object']['sha']
   # head_url = head['object']['url']
 
-  head_commit = JSON.parse(`curl -H "Authorization: token $GIT_TOKEN" #{ head['object']['url'] }`)
+  head_commit = JSON.parse(`curl -H "Authorization: token $GITHUB_TOKEN" #{ head['object']['url'] }`)
 
   # head_commit_sha = head_commit['sha']
   # head_tree_sha   = head_commit['tree']['sha']
@@ -60,21 +60,21 @@ def encode_file
 end
 
 def send_file_to_github
-  file_data = JSON.parse(`curl -i -H "Authorization: token $GIT_TOKEN" -d '{"content": "#{ encode_file }", "encoding": "base64"}' https://api.github.com/repos/sensu-plugins/sensu-plugins-datadog/git/blobs`)# rubocop:disable all
+  file_data = JSON.parse(`curl -H "Authorization: token $GITHUB_TOKEN" -d '{"content": "#{ encode_file }", "encoding": "base64"}' https://api.github.com/repos/sensu-plugins/sensu-plugins-datadog/git/blobs`)# rubocop:disable all
   file_data['sha']
 end
 
 def commit_tree(head_tree_url, head_tree_sha, file_data_sha)
-  data = JSON.parse(`curl -H "Authorization: token $GIT_TOKEN" #{ head_tree_url }`)
+  data = JSON.parse(`curl -H "Authorization: token $GITHUB_TOKEN" #{ head_tree_url }`)
 
-  `curl -i -H "Authorization: token $GIT_TOKEN" -d '{ "base_tree": "#{ head_tree_sha }", "tree": [ { "path": "lib/sensu-plugins-datadog/version.rb", "mode": "100644", "type": "blob", "sha": "#{ file_data_sha }" } ]}' https://api.github.com/repos/sensu-plugins/sensu-plugins-datadog/git/trees`# rubocop:disable all
+  `curl -H "Authorization: token $GITHUB_TOKEN" -d '{ "base_tree": "#{ head_tree_sha }", "tree": [ { "path": "lib/sensu-plugins-datadog/version.rb", "mode": "100644", "type": "blob", "sha": "#{ file_data_sha }" } ]}' https://api.github.com/repos/sensu-plugins/sensu-plugins-datadog/git/trees`# rubocop:disable all
   data['sha']
 end
 
 def create_commit(head_commit_sha, commit_tree_sha)
-  commit_data = JSON.parse(`curl -i -H "Authorization: token $GIT_TOKEN" -d '{"message": "version bump", "parents": ["#{ head_commit_sha }"], "tree": "#{ commit_tree_sha }"}' https://api.github.com/repos/sensu-plugins/sensu-plugins-datadog/git/commits`)# rubocop:disable all
+  commit_data = JSON.parse(`curl -H "Authorization: token $GITHUB_TOKEN" -d '{"message": "version bump", "parents": ["#{ head_commit_sha }"], "tree": "#{ commit_tree_sha }"}' https://api.github.com/repos/sensu-plugins/sensu-plugins-datadog/git/commits`)# rubocop:disable all
 
-  `curl -i -H "Authorization: token $GIT_TOKEN" -d '{ "sha": "#{ commit_data['sha'] }", "force": true}' https://api.github.com/repos/sensu-plugins/sensu-plugins-datadog/git/refs/heads/master`# rubocop:disable all
+  `curl -H "Authorization: token $GITHUB_TOKEN" -d '{ "sha": "#{ commit_data['sha'] }", "force": true}' https://api.github.com/repos/sensu-plugins/sensu-plugins-datadog/git/refs/heads/master`# rubocop:disable all
 end
 
 #

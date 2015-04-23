@@ -11,7 +11,7 @@ end
 # pvt_key = '~/.ssh/gem-private_key.pem'
 
 Gem::Specification.new do |s|
-  s.authors                = ['Yieldbot, Inc. and contributors']
+  s.authors                = ['Sensu-Plugins and contributors']
   # s.cert_chain             = ['certs/sensu-plugins.pem']
   s.date                   = Date.today.to_s
   s.description            = ''

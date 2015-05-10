@@ -1,5 +1,6 @@
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+
 require 'date'
 
 if RUBY_VERSION < '2.0.0'
@@ -22,8 +23,8 @@ Gem::Specification.new do |s|
   s.license                = 'MIT'
   s.metadata               = { 'maintainer'         => '',
                                'development_status' => 'unmaintained',
-                               'production_status'  => 'unstable - testing reccomended',
-                               'releae_draft'       => 'true',
+                               'production_status'  => 'unstable - testing recommended',
+                               'release_draft'       => 'false',
                                'release_prerelease' => 'false'
                               }
   s.name                   = 'sensu-plugins-datadog'

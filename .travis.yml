@@ -7,6 +7,7 @@ rvm:
   - 1.9.3
   - 2.0
   - 2.1
+  - 2.2
 notifications:
   irc:
     channels:
@@ -15,7 +16,7 @@ notifications:
     on_failure: always
   email:
     recipients:
-      - sensu-plugin@sensu-plugin.io
+      - sensu-plugin@sensu-plugins.io
       - rich.m.chatterton@gmail.com
     on_success: change
     on_failure: always

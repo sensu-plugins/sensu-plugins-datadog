@@ -5,7 +5,6 @@
 [![Code Climate](https://codeclimate.com/github/sensu-plugins/sensu-plugins-datadog/badges/gpa.svg)](https://codeclimate.com/github/sensu-plugins/sensu-plugins-datadog)
 [![Test Coverage](https://codeclimate.com/github/sensu-plugins/sensu-plugins-datadog/badges/coverage.svg)](https://codeclimate.com/github/sensu-plugins/sensu-plugins-datadog)
 [![Dependency Status](https://gemnasium.com/sensu-plugins/sensu-plugins-datadog.svg)](https://gemnasium.com/sensu-plugins/sensu-plugins-datadog)
-[ ![Codeship Status for sensu-plugins/sensu-plugins-datadog](https://codeship.com/projects/5e9844c0-b191-0132-e195-32bd639983ea/status?branch=master)](https://codeship.com/projects/69880)
 
 ## Functionality
 ```json

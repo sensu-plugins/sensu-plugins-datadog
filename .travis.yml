@@ -1,20 +1,34 @@
 language: ruby
 cache:
-  - bundler
+- bundler
 install:
-  - bundle install
+- bundle install
 rvm:
-  - 1.9.3
-  - 2.0
-  - 2.1
-  - 2.2
+- 1.9.3
+- 2.0
+- 2.1
+- 2.2
 notifications:
   email:
     recipients:
-      - sensu-plugin@sensu-plugins.io
-      - rich.m.chatterton@gmail.com
+    - sensu-plugin@sensu-plugins.io
+    - rich.m.chatterton@gmail.com
     on_success: change
     on_failure: always
-
 script:
-  - 'bundle exec rake default'
+- bundle exec rake default
+- gem build sensu-plugins-datadog.gemspec
+- gem install sensu-plugins-datadog-*.gem
+deploy:
+  provider: rubygems
+  api_key:
+    secure: PDXv6IXTzwLv/Sm2aJzIpA8R76vN/M3k+lexETpbjcAP0vWv2qhH0qHeSeQYPW1KTKKqjCZ4GsGNnNEm2+yFxFNLlGCM/GiyTvGKU+RsyyIv6jndH+0jbwmG2JyfUM71unC0T53+VI6MZgFlio+2K3YKvNxxVZPh7YjCHjJhWfo=
+  gem: sensu-plugins-datadog
+  on:
+    tags: true
+    all_branches: true
+    rvm: 1.9.3
+    rvm: 2.0
+    rvm: 2.1
+    rvm: 2.2
+    repo: sensu-plugins/sensu-plugins-datadog

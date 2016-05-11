@@ -90,8 +90,7 @@ class DatadogNotif < Sensu::Handler
                                     priority: priority,
                                     source_type_name: 'nagios', # make events appear as nagios alerts so the weekly nagios report can be produced
                                     aggregation_key: @event['check']['name']
-        ), host: @event['client']['name']
-                                 )
+        ), host: @event['client']['name'])
 
         begin
           if response[0] == '202'

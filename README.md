@@ -10,6 +10,7 @@
 ```json
 {
   "datadog": {
+    "source_type_name": "nagios",
     "api_key": "12345",
     "app_key": "54321",
     "tags": []

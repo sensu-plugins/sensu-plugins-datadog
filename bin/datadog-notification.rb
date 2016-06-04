@@ -88,7 +88,7 @@ class DatadogNotif < Sensu::Handler
                                     tags: tags,
                                     alert_type: action,
                                     priority: priority,
-                                    source_type_name: 'nagios', # make events appear as nagios alerts so the weekly nagios report can be produced
+                                    source_type_name: settings['datadog']['source_type_name'] || 'sensu', # let the user set the source_type_name
                                     aggregation_key: @event['check']['name']
         ), host: @event['client']['name'])
 

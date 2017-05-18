@@ -4,6 +4,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
 ## [Unreleased]
+### Changed
+- Replace `datadog` with `dogapi` gem as that's the current dependency for this plugin (@eheydrick)
 
 ## [1.0.0] - 2017-05-17
 ### Added

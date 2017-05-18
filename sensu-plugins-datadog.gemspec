@@ -27,7 +27,7 @@ Gem::Specification.new do |s|
   s.test_files             = s.files.grep(%r{^(test|spec|features)/})
   s.version                = SensuPluginsDatadog::Version::VER_STRING
 
-  s.add_runtime_dependency 'datadog', '0.1.0.alpha'
+  s.add_runtime_dependency 'dogapi',       '~> 1.27'
   s.add_runtime_dependency 'sensu-plugin', '~> 1.2'
 
   s.add_development_dependency 'bundler', '~> 1.7'
